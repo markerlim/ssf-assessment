@@ -46,7 +46,6 @@ public class NoticeRepository {
 
 	//randomKey
 	public String randomKey() {
-
 			return redisTemplate.randomKey();
 	}
 

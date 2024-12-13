@@ -1,28 +1,22 @@
-FROM openjdk:23-jdk AS builder
+FROM eclipse-temurin:23 AS builder
 
-ARG APP_DIR=/app
-WORKDIR ${APP_DIR}
+WORKDIR /app
 
-COPY mvnw .                   
-COPY mvnw.cmd .               
-COPY pom.xml .                
-COPY .mvn .mvn                
-COPY src src                  
+COPY . .
 
-RUN chmod a+x ./mvnw && ./mvnw clean package -Dmaven.test.skip=true
+RUN ./mvnw install -Dmaven.test.skip=true
 
-FROM openjdk:23-jdk
+FROM eclipse-temurin:23
 
-ARG DEPLOY_DIR=/app
-WORKDIR ${DEPLOY_DIR}
+WORKDIR /app
 
-COPY --from=builder /app/target/noticeboard-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/*.jar app.jar
 
-ENV SERVER_PORT=8080         
+ENV PORT=8080
 
-EXPOSE ${SERVER_PORT}
+EXPOSE ${PORT}
 
 HEALTHCHECK --interval=60s --start-period=120s --retries=3 \
    CMD curl -s -f http://localhost:${SERVER_PORT}/status || exit 1
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT SERVER_PORT=${PORT} java -jar /app/app.jar -Dserver.port=${PORT}

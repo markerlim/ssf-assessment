@@ -28,7 +28,7 @@ public class Notice {
     @NotEmpty
     private List<String> categories;
 
-    @NotEmpty
+    @NotEmpty(message = "You cannot submit an empty notice")
     private String text;
 
     public Notice(){

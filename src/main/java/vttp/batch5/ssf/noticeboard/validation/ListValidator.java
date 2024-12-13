@@ -1,7 +1,5 @@
 package vttp.batch5.ssf.noticeboard.validation;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 import jakarta.validation.ConstraintValidator;
