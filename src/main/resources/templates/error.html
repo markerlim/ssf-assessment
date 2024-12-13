@@ -1,0 +1,17 @@
+<!--View 3 - Display the error message if there are any errors from the notice publishing REST API.
+A "Back" link allows View 2 to transition to View 1-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Error</title>
+</head>
+<body>
+   <h1>Cannot post notice to the server</h1>
+   <h2>Error message</h2>
+   <span data-th-text="${error}"></span>
+   <h3> <a href="/"> Back </a> </h3>
+   
+</body>
+</html>
